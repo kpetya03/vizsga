@@ -1,0 +1,28 @@
+enable
+conf t
+ip domain-name trefort.eu
+hostname S2
+banner motd ""
+service password-encryption
+enable secret cisco
+line con 0
+pass class
+exec-timeout 200
+login
+exit
+line vty 0 15
+pass class
+exec-timeout 20
+login
+exit
+crypto key generate rsa
+1024
+username admin privilege 15 password admin
+ip ssh version 2
+ip ssh time-out 119
+line vty 0 15 
+transport input ssh
+login local
+exit
+
+
