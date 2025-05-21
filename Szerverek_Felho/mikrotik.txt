@@ -1,1 +1,25 @@
+Network
+1. NAT
+2. Internal network
+3. host only
 
+
+interface/print
+
+ip/dhcp-client/add disabled=no interface=ether1
+
+ip/address/add interface=ether2 address=172.16.0.1/16
+
+ip/address/add interface=ether3 address=192.168.56.99/24
+VAGY
+ip/dhcp-client/add disabled=no interface=ether3
+
+ip/address/print
+
+ip/firewall/nat/add chain=srcnat action=masquerade out-interface=ether1
+
+#Windows
+ip/firewall/nat/add chain=dstnat action=dst-nat in-interface=ether3 dst-port=50000 to-addresses=172.16.0.254 to-ports=3389 protocol=tcp
+
+#Linux
+ip/firewall/nat/add chain=dstnat action=dst-nat in-interface=ether3 dst-port=2222 to-addresses=172.16.0.254 to-ports=22 protocol=tcp
